@@ -5,7 +5,7 @@ Plugin Name: Inline recommendations
 Plugin URI: http://gresak.net
 Description: Put reading recommendations in the main text
 Author: Gregor Grešak
-Version: 1.0
+Version: 1.1
 Author URI: http://gresak.net
 */
 
@@ -24,6 +24,8 @@ class Inline_Recommendations {
 	public function __construct() {
 		add_shortcode( 'see', array($this,"recommend") );
 		add_action( 'customize_register', array($this,'customizer') );
+		add_filter("mce_external_plugins",array($this,'load_tmce_plugin'));
+		add_filter( 'mce_buttons', array($this, 'register_tmce_buttons') );
 	}
 
 	public function recommend($args,$content="") {
@@ -34,6 +36,16 @@ class Inline_Recommendations {
 		$data = $oembed->fetch($provider,$content);
 		
 		return $this->get_html($data);
+	}
+
+	public function load_tmce_plugin($plugin) {
+		$plugin['SeeButton'] = plugins_url( 'inline-recommendations/irtmce.js' );
+		return $plugin;
+	}
+
+	public function register_tmce_buttons($buttons) {
+		array_push( $buttons, 'see' ); 
+    	return $buttons;
 	}
 
 	public function customizer($customize) {
@@ -53,7 +65,6 @@ class Inline_Recommendations {
 					)
 				)
 			);
-
 	}
 
 	protected function get_html($data) {
