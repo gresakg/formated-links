@@ -42,7 +42,7 @@ class Inline_Recommendations {
 	}
 
 	public function load_tmce_plugin($plugin) {
-		$plugin['SeeButton'] = plugins_url( 'inline-recommendations/irtmce.js' );
+		$plugin['SeeButton'] = plugins_url( 'inline-recommendation/irtmce.js' );
 		return $plugin;
 	}
 
