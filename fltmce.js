@@ -1,5 +1,5 @@
  (function() {
-    tinymce.create('tinymce.plugins.SeeButton', {
+    tinymce.create('tinymce.plugins.FLinks', {
         /**
          * Initializes the plugin, this will be executed after the plugin has been created.
          * This call is done before the editor instance has finished it's initialization so use the onInit event
@@ -28,14 +28,28 @@
                 }
 
             });
+
+            ed.addButton('ctabutton', {
+                title : 'CTA Button',
+                image : url + '/button.png',
+                onclick: function() {
+                    // Open window
+                    ed.windowManager.open({
+                        title: 'CTA Button',
+                        body: [
+                            {type: 'textbox', name: 'url', label: 'URL'},
+                            {type: 'textbox', name: 'title', label: 'Title'}
+                        ],
+                        onsubmit: function(e) {
+                            // Insert content when the window form is submitted
+                            ed.insertContent('[ggcte url="' + e.data.url + '"]' + e.data.title + '[/ggcte]');
+                        }
+                    });
+                }
+
+            });
             
-            /*ed.addCommand('see', function() {
-                var url = prompt("Related url:"),
-                    shortcode;
-                
-                    shortcode = '[see]' + url + '[/see]';
-                    ed.execCommand('mceInsertContent', 0, shortcode);
-            });*/
+            
         },
  
         /**
@@ -60,7 +74,7 @@
          */
         getInfo : function() {
             return {
-                longname : 'Inline Recommendation Button',
+                longname : 'Formated Links',
                 author : 'Gresak Gregor',
                 authorurl : 'http://gresak.net',
                 infourl : 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/example',
@@ -70,5 +84,5 @@
     });
  
     // Register plugin
-    tinymce.PluginManager.add( 'SeeButton', tinymce.plugins.SeeButton );
+    tinymce.PluginManager.add( 'FLinks', tinymce.plugins.FLinks );
 })();
