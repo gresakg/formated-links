@@ -11,17 +11,31 @@
         init : function(ed, url) {
             ed.addButton('see', {
                 title : 'See also',
-                cmd : 'see',
-                image : url + '/relation_map.png'
+                image : url + '/relation_map.png',
+                onclick: function() {
+                    // Open window
+                    ed.windowManager.open({
+                        title: 'Recommend',
+                        body: [
+                            {type: 'textbox', name: 'url', label: 'URL'},
+                            {type: 'textbox', name: 'title', label: 'Title'}
+                        ],
+                        onsubmit: function(e) {
+                            // Insert content when the window form is submitted
+                            ed.insertContent('[see url="' + e.data.url + '"]' + e.data.title + '[/see]');
+                        }
+                    });
+                }
+
             });
             
-            ed.addCommand('see', function() {
+            /*ed.addCommand('see', function() {
                 var url = prompt("Related url:"),
                     shortcode;
                 
                     shortcode = '[see]' + url + '[/see]';
                     ed.execCommand('mceInsertContent', 0, shortcode);
-            });
+            });*/
         },
  
         /**

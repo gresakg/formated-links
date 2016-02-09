@@ -21,6 +21,8 @@ class Inline_Recommendations {
 
 	protected $url;
 
+	protected $title;
+
 	public function __construct() {
 		add_shortcode( 'see', array($this,"recommend") );
 		add_action( 'customize_register', array($this,'customizer') );
@@ -29,11 +31,12 @@ class Inline_Recommendations {
 	}
 
 	public function recommend($args,$content="") {
-		$oembed = $this->get_oembed();
-		$this->url = $content;
-
-		$provider = $oembed->get_provider($content);
-		$data = $oembed->fetch($provider,$content);
+		$data = new stdClass();
+		if(empty($content)) {
+			$content = $args['url'];
+		}
+		$data->title = $content;
+		$data->url = $args['url'];
 		
 		return $this->get_html($data);
 	}
@@ -70,7 +73,7 @@ class Inline_Recommendations {
 	protected function get_html($data) {
 		return '<div class="'.$this->container_css_class.'"><b>'
 				.get_theme_mod("recommendation_string",$this->recommendation_string)
-				.':</b> <a href="'.$this->url.'">'.$data->title.'</a>'
+				.':</b> <a href="'.$data->url.'">'.$data->title.'</a>'
 				.'</div>';
 	}
 
