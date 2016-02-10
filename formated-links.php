@@ -34,7 +34,7 @@ class GG_Formated_Links {
 	public function cte_button($args,$content) {
 		$data = $this->get_data($args, $content);
 		return '<div class="'.$this->container_css_class.'" style="text-align:center;"><b>'
-		.'<a href="'.$data->url.'" class="turquoise-bg btn rounded  btn-lg">'.$data->title.'</a>'
+		.'<a href="'.$data->url.'" class="turquoise-bg btn rounded  btn-lg">'.$data->title.'</a></b>'
 				.'</div>';
 	}
 
