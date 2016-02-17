@@ -27,13 +27,14 @@ class GG_Formated_Links {
 		add_shortcode( 'see', array($this,"recommend") );
 		add_shortcode( 'ggcte', array($this,"cte_button") );
 		add_action( 'customize_register', array($this,'customizer') );
+		add_action( 'wp_head', array($this,'set_css'));
 		add_filter("mce_external_plugins",array($this,'load_tmce_plugin'));
 		add_filter( 'mce_buttons', array($this, 'register_tmce_buttons') );
 	}
 
 	public function cte_button($args,$content) {
 		$data = $this->get_data($args, $content);
-		return '<div class="'.$this->container_css_class.'" style="text-align:center;">'
+		return '<div class="'.$this->container_css_class.'" style="text-align:center;" target="_blank">'
 		.'<a href="'.$data->url.'" class="turquoise-bg btn rounded  btn-lg"><b>'.$data->title.'</b></a>'
 				.'</div>';
 	}
@@ -74,6 +75,22 @@ class GG_Formated_Links {
 					)
 				)
 			);
+	}
+
+	public function set_css() {
+		echo "<style>"
+				.".$this->container_css_class .btn {" 
+				."background-color: #1f8dd6;border-radius: 0.5em;"
+			    ."color: #fff;"
+			    ."display: inline-block;"
+			    ."line-height: 1em;"
+			    ."margin: 0.5em;"
+			    ."max-height: 4em;"
+			    ."padding: 16px 13px 17px;"
+			    ."text-align: center;"
+			    ."text-decoration: none;"
+			."} "
+			."</style>";
 	}
 
 	protected function get_data($args,$content="") {
