@@ -95,11 +95,15 @@ class GG_Formated_Links {
 
 	protected function get_data($args,$content="") {
 		$data = new stdClass();
+		if(isset($args['url'])) {
+			$data->url = $args['url'];
+		} else {
+			$data->url = $content;
+		}
 		if(empty($content)) {
-			$content = $args['url'];
+			$content = $data->url;
 		}
 		$data->title = $content;
-		$data->url = $args['url'];
 		
 		return $data;
 	}
