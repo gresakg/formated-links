@@ -80,8 +80,8 @@ class GG_Formated_Links {
 	public function set_css() {
 		echo "<style>"
 				.".{$this->container_css_class}-button a {" 
-				."background-color: #1f8dd6;border-radius: 0.5em;"
-			    ."color: #fff;"
+				."background-color: #1f8dd6;"
+				."border-radius: 0.5em;"
 			    ."display: inline-block;"
 			    ."line-height: 1em;"
 			    ."margin: 0.5em;"
