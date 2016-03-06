@@ -30,6 +30,7 @@ class GG_Formated_Links {
 		add_action( 'wp_head', array($this,'set_css'));
 		add_filter("mce_external_plugins",array($this,'load_tmce_plugin'));
 		add_filter( 'mce_buttons', array($this, 'register_tmce_buttons') );
+		add_filter('widget_text', 'do_shortcode');
 	}
 
 	public function cte_button($args,$content) {
