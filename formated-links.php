@@ -17,6 +17,8 @@ class GG_Formated_Links {
 
 	protected $container_css_class = "formated-links";
 
+	protected $button_container_css_class = "turquoise-bg btn rounded  btn-lg";
+
 	protected $oembed;
 
 	protected $url;
@@ -36,7 +38,7 @@ class GG_Formated_Links {
 	public function cte_button($args,$content) {
 		$data = $this->get_data($args, $content);
 		return '<div class="'.$this->container_css_class.'-button" style="text-align:center;">'
-		.'<a href="'.$data->url.'" class="turquoise-bg btn rounded  btn-lg" target="_blank"><b>'.$data->title.'</b></a>'
+		.'<a href="'.$data->url.'" class="'.$this->button_container_css_class.'" target="_blank"><b>'.$data->title.'</b></a>'
 				.'</div>';
 	}
 
@@ -60,11 +62,12 @@ class GG_Formated_Links {
 	}
 
 	public function customizer($customize) {
-		$customize->add_setting('recommendation_string',array("default"=>"See also"));
+		
 		$customize->add_section('inline_recommendations', array(
 			"title" => "Inline Recommendations",
 			"priority" => 100
 			));
+		$customize->add_setting('recommendation_string',array("default"=>"See also"));
 		$customize->add_control(
 			new WP_Customize_Control(
 				$customize,
@@ -76,6 +79,31 @@ class GG_Formated_Links {
 					)
 				)
 			);
+		$customize->add_setting('button_container_css_class',array("default"=>"turquoise-bg btn rounded  btn-lg"));
+		$customize->add_control(
+			new WP_Customize_Control(
+				$customize,
+				'button_container_css_class',
+				array(
+					'label' => 'Button container class',
+					'section' => 'inline_recommendations',
+					'settings' => 'button_container_css_class'
+					)
+				)
+			);
+		$customize->add_setting('container_css_class',array("default"=>"formated-links"));
+		$customize->add_control(
+			new WP_Customize_Control(
+				$customize,
+				'container_css_class',
+				array(
+					'label' => 'Container class',
+					'section' => 'inline_recommendations',
+					'settings' => 'container_css_class'
+					)
+				)
+			);
+		
 	}
 
 	public function set_css() {
@@ -105,6 +133,8 @@ class GG_Formated_Links {
 			$content = $data->url;
 		}
 		$data->title = $content;
+		$this->button_container_css_class = get_theme_mod('button_container_css_class', "turquoise-bg btn rounded  btn-lg");
+		$this->container_css_class = get_theme_mod('container_css_class', $this->container_css_class);
 		
 		return $data;
 	}
